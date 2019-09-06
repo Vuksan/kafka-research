@@ -1,0 +1,11 @@
+{
+  "name": "kafka-research",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:Vuksan/kafka-research.git",
+  "author": "Vuksan Simunovic <vuk.simunovic@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "kafkajs": "^1.10.0"
+  }
+}

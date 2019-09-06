@@ -1,0 +1,25 @@
+const {Kafka} = require('kafkajs')
+
+const kafka = new Kafka({
+    clientId: 'my-app',
+    brokers: ['192.168.1.8:9092']
+})
+
+// Create a consumer that consumes our message
+const consumer = kafka.consumer({groupId: 'test-group'})
+
+async function run() {
+    await consumer.connect()
+    await consumer.subscribe({topic: 'test-topic'})
+
+    await consumer.run({
+        eachMessage: async ({topic, partition, message}) => {
+            console.log(message.value.toString())
+        },
+    })
+}
+
+run()
+    .catch(function (error) {
+        console.error('Something went wrong!', error)
+    })

@@ -18,7 +18,7 @@ services:
     networks:
       - kafka
     environment:
-      KAFKA_ADVERTISED_HOST_NAME: 192.168.0.27
+      KAFKA_ADVERTISED_HOST_NAME: ${host_ip}
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
       KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'true'
       KAFKA_DELETE_TOPIC_ENABLE: 'true'

@@ -1,32 +1,26 @@
-# kafka-research
+1. You will need `envsubst`. On macOS, install it with `brew`
 
-- Install dependencies:
-```
-yarn install
-````
+`brew install gettext`
+`brew link --force gettext`
 
-- Configure kafka:
-```
-docker-compose up -d
-```
+1. You need to get your host IP and use it in `docker-compose.yml` (KAFKA_ADVERTISED_HOST_NAME). In my case on macOS my docker is on `en1`:
 
-- Run producer with:
-```
-node producer.js
-```
+`host_ip=$(ipconfig getifaddr en1) envsubst < docker-compose.yml.template > docker-compose.yml`
 
-- Run consumer with:
+
+1. producer.js and consumer.js must have $host_ip for `brokers`:
+
 ```
-node consumer.js
+host_ip=$(ipconfig getifaddr en1) envsubst < producer.js.template > producer.js
+host_ip=$(ipconfig getifaddr en1) envsubst < consumer.js.template > consumer.js
 ```
 
-Enjoy!
 
-# F.A.Q.
-### 1. It doesn't work?  
-Run the following command to get the IP of your host machine:
-```
-ifconfig | grep -E "([0-9]{1,3}\.){3}[0-9]{1,3}" | grep -v 127.0.0.1 | awk '{ print $2 }' | cut -f2 -d: | head -n1
-```
-In `docker-compose.yml` replace `KAFKA_ADVERTISED_HOST_NAME` value with your IP address.  
-Change the IP adddress in `brokers` array of both `producer.js` and `consumer.js` to your IP. 
+1. If you have older version of docker, you have to create `kafka` network first:
+
+`docker network create kafka`
+
+
+1. Run it:
+
+`docker-compose up -d`

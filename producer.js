@@ -1,36 +1,33 @@
-const {Kafka} = require('kafkajs')
+const { Kafka } = require("kafkajs");
 
 const kafka = new Kafka({
-    clientId: 'my-app',
-    brokers: ['192.168.1.8:9092']
-})
+  clientId: "my-app",
+  brokers: ["192.168.0.27:9092"]
+});
 
 // Create a producer to produce a message to a topic
-const producer = kafka.producer()
+const producer = kafka.producer();
 
-let messageNumber = 1
+let messageNumber = 1;
 
 async function sendMessage() {
-    const messageToSend = 'Message number ' + messageNumber
-    messageNumber += 1
+  const messageToSend = "Message number " + messageNumber;
+  messageNumber += 1;
 
-    await producer.send({
-        topic: 'test-topic',
-        messages: [
-            {value: messageToSend},
-        ],
-    })
+  await producer.send({
+    topic: "test-topic",
+    messages: [{ value: messageToSend }]
+  });
 
-    console.log(messageToSend + ' sent!')
+  console.log(messageToSend + " sent!");
 }
 
 async function run() {
-    await producer.connect()
-    setInterval(sendMessage, 3000)
+  await producer.connect();
+  setInterval(sendMessage, 3000);
 }
 
-run()
-    .catch(async function (error) {
-        console.error('Something went wrong!', error)
-        await producer.disconnect()
-    })
+run().catch(async function(error) {
+  console.error("Something went wrong!", error);
+  await producer.disconnect();
+});
